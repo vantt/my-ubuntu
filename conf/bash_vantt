@@ -1,0 +1,334 @@
+#!/bin/bash
+
+export GOPATH='/ext4Data1/projects/golang/gopath'
+export GOROOT='/ext4Data1/softwares/go'
+export ANDROID_HOME='/ext4Data1/softwares/android-sdk'
+#export JAVA_HOME='/usr/lib/jvm/java-8-openjdk-amd64'
+export DART_SDK='/ext4Data1/softwares/dart-sdk'
+export FLUTTER_SDK='/ext4Data1/softwares/flutter-sdk'
+
+export PATH="$PATH:$DART_SDK/bin:$FLUTTER_SDK/bin:$GOPATH/bin:$GOROOT/bin:$HOME/.composer/vendor/bin:/ext4Data1/softwares/gradle/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+
+alias bud='sudo -i'
+
+alias gom1='ssh -p6879 vantt@m1'
+alias gom2='ssh -p6879 vantt@m2'
+alias gom3='ssh -p6879 vantt@m3'
+alias godev='ssh vantt@dev'
+alias goapp='ssh vantt@app'
+alias gosvn='ssh vantt@svn'
+alias golamp='dker_ssh lamp root'
+alias tolamp='cd /ext4Data1/dev/lamp'
+#alias atdd='docker run -ti --rm  -v $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK -v $(pwd):/project ansible/ansible-tdd atdd'
+
+alias build='cd /ext4Data1/dev/lamp2/build-tool/code; phing'
+alias tailm='tail -f /ext4Data1/dev/lamp2/docker_db_anphabe/mysql/log/mysql.log'
+alias vime='vi /ext4Data1/dev/lamp/log/apache2/error.log'
+
+atdd () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+        --volume $(pwd)/.ssh:/home/atdd/.ssh \
+        --volume $(pwd):/project \
+        --env SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+        nguyenphuongthanhf/ansible-tdd:v2.4.13 atdd "$@"
+}
+
+
+php () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --network=https-proxy \
+        --volume $(pwd):/app \
+        --volume $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+        --volume /etc/passwd:/etc/passwd:ro \
+        --volume /etc/group:/etc/group:ro \
+        --user $(id -u):$(id -g) \
+        --env SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+        990863991647.dkr.ecr.us-west-2.amazonaws.com/devops/phpcli:latest "$@"
+}
+
+php2 () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --network=https-proxy \
+        --volume $(pwd):/app \
+        --volume $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+        --volume /etc/passwd:/etc/passwd:ro \
+        --volume /etc/group:/etc/group:ro \
+        --user $(id -u):$(id -g) \
+        --env SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+        phppcn:latest "$@"
+}
+
+composer () {
+    CACHE_FOLDER=~/.composer
+    
+    if [[ ! -d $CACHE_FOLDER ]]; then       
+        mkdir -p $CACHE_FOLDER/cache;
+    fi 
+
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+        --volume $CACHE_FOLDER:/composer_cache \
+        --volume $(pwd):/app \
+        --volume /etc/passwd:/etc/passwd:ro \
+        --volume /etc/group:/etc/group:ro \
+        --user $(id -u):$(id -g) \
+        --env SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+        990863991647.dkr.ecr.us-west-2.amazonaws.com/devops/composer "$@" --prefer-source --verbose --ignore-platform-reqs
+}
+
+composer2 () {
+    CACHE_FOLDER=~/.composer
+    
+    if [[ ! -d $CACHE_FOLDER ]]; then       
+        mkdir -p $CACHE_FOLDER/cache;
+    fi 
+
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+        --volume $CACHE_FOLDER:/composer_cache \
+        --volume $(pwd):/app \
+        --volume /etc/passwd:/etc/passwd:ro \
+        --volume /etc/group:/etc/group:ro \
+        --user $(id -u):$(id -g) \
+        --env SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+        990863991647.dkr.ecr.us-west-2.amazonaws.com/devops/composer "$@"  --verbose 
+}
+
+phpunit () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+        --volume $(pwd):/app \
+        --volume /etc/passwd:/etc/passwd:ro \
+        --volume /etc/group:/etc/group:ro \
+        --user $(id -u):$(id -g) \
+        --env SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+        devops/phpunit:8 "$@"
+}
+
+phpspec () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+        --volume $(pwd):/app \
+        --volume /etc/passwd:/etc/passwd:ro \
+        --volume /etc/group:/etc/group:ro \
+        --user $(id -u):$(id -g) \
+        --env SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+        devops/phpspec:v6.6.1 "$@"
+}
+
+yarnxxxx () {
+    CACHE_FOLDER=~/.yarn
+    ME=$(whoami)    
+    if [[ ! -d $CACHE_FOLDER ]]; then       
+        mkdir -p $CACHE_FOLDER/cache;
+        mkdir -p $CACHE_FOLDER/config;
+    fi 
+   
+    touch $CACHE_FOLDER/.yarnrc
+
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+        --volume $CACHE_FOLDER:/var/yarn \
+        --volume $CACHE_FOLDER/.yarnrc:/home/$ME/.yarnrc \
+        --volume $(pwd):/app \
+        --volume /etc/passwd:/etc/passwd:ro \
+        --volume /etc/group:/etc/group:ro \
+        -w /app \
+        --user $(id -u):$(id -g) \
+        --env YARN_CACHE_FOLDER=/var/yarn/cache \
+        --env SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+        node:latest yarn "$@"
+}
+
+npmxxxx () {
+    CACHE_FOLDER=~/.npm
+
+    if [[ ! -d $CACHE_FOLDER ]]; then
+        mkdir -p $CACHE_FOLDER/cache;
+        mkdir -p $CACHE_FOLDER/config;
+    fi
+
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+        --volume $CACHE_FOLDER:/var/npm \
+        --volume $(pwd):/app \
+        --volume /etc/passwd:/etc/passwd:ro \
+        --volume /etc/group:/etc/group:ro \
+        -w /app \
+        --user $(id -u):$(id -g) \
+        --env SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+        --env NPM_CONFIG_CACHE=/var/npm/cache \
+        --env NPM_CONFIG_USERCONFIG=/var/npm/config/.user_config \
+        node:latest npm "$@"
+}
+
+
+symfony () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+        --volume $(pwd):/app \
+        --volume /etc/passwd:/etc/passwd:ro \
+        --volume /etc/group:/etc/group:ro \
+        --user $(id -u):$(id -g) \
+        --env SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+        ypereirareis/symfony-installer "$@"
+}
+
+function go1() {
+    HOST_GOPATH=$GOPATH
+    CONTAINER_GOPATH='/gopath'
+
+    if [[ ! -d $HOST_GOPATH ]]; then
+        mkdir -p $HOST_GOPATH    
+    fi
+
+    tty=
+    tty -s && tty=--tty
+
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --env GOPATH="$CONTAINER_GOPATH" \
+        --volume $HOST_GOPATH:$CONTAINER_GOPATH \
+        --volume $(pwd):/usr/src/myapp  \
+        -w /usr/src/myapp  \
+        --volume $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+        --volume /etc/passwd:/etc/passwd:ro \
+        --volume /etc/group:/etc/group:ro \
+        --user $(id -u):$(id -g) \
+        --env SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+       golang:latest go "$@"
+}
+
+function jump() {
+    DIRECTORY=$1
+
+    if [ -d "$DIRECTORY" ]; then
+        cd "$DIRECTORY"    
+    else
+        cd $(dirname "$DIRECTORY")
+    fi
+}
+
+function code_latest_tag() {
+   git tag --sort=v:refname | tail -5
+}
+
+function code_update() {
+    tmp_dir="$(pwd)"
+    toplevel_dir="$(git rev-parse --show-toplevel)"
+    cd "$toplevel_dir"
+
+    git stash
+    echo -e "\e[32m-------------------------------\e[0m\n"
+
+    git checkout master
+    echo -e "\e[32m-------------------------------\e[0m\n"
+
+    git pull
+    echo -e "\e[32m-------------------------------\e[0m\n"
+
+    git stash pop
+    echo -e "\e[32m-------------------------------\e[0m\n"
+
+    cd "$tmp_dir"
+}
+
+function anfa_update() {
+    tmp_dir="$(pwd)"
+    toplevel_dir="$(git rev-parse --show-toplevel)"
+    cd "$toplevel_dir"
+
+    git stash
+    echo -e "\e[32m-------------------------------\e[0m\n"
+
+    git checkout master
+    echo -e "\e[32m-------------------------------\e[0m\n"
+
+    git pull
+    echo -e "\e[32m-------------------------------\e[0m\n"
+
+    git stash pop
+    echo -e "\e[32m-------------------------------\e[0m\n"
+
+    cd "$tmp_dir"
+}
+
+function code_commit() {
+    tmp_dir="$(pwd)"    
+    toplevel_dir="$(git rev-parse --show-toplevel)"
+    cd "$toplevel_dir"
+
+    git add .
+    git commit -m "$1"
+    git push
+    cd "$tmp_dir"
+}
+
+function code_tag() {
+    git tag -a "$1" -m "$2"
+}
+
+function code_release() {
+    code_tag $1 $2
+    code_latest_tag
+    git push --tag
+}
+
+function gi() { curl http://www.gitignore.io/api/$@ ;}
+
+function taile() {
+  tail -f /ext4Data1/dev/lamp2/docker_web/apache2/log/error.log | sed -ue 's/\\n/\n/g' | sed -ue 's/\\\+/\\/g';
+}
