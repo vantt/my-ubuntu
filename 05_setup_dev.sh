@@ -4,18 +4,18 @@
 . $(dirname $0)/00_config.sh
 
 # install dev base
-sudo apt install -y apt-transport-https build-essential tasksel curl wget filezilla git awscli
+sudo apt install -y software-properties-common apt-transport-https build-essential tasksel curl wget filezilla git awscli
 
 # install Visual Studio Code
-sudo apt install -y apt-transport-https
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-sudo apt -y update
-sudo apt -y install code # or code-insiders
+wget -O code.deb https://update.code.visualstudio.com/latest/linux-deb-x64/stable
+sudo dpkg -i code.deb
+
+# install Beyond Compare 4
+wget -O bcompare.deb https://www.scootersoftware.com/bcompare-4.3.4.24657_amd64.deb
+sudo dpkg -i bcompare.deb
 
 # install JAVA
-sudo apt install openjdk-11-jre-headless
+sudo apt install -y openjdk-11-jre-headless
 
 # install Vagrant && VirtualBox
 sudo apt install -y virtualbox virtualbox-guest-additions-iso vagrant

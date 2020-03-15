@@ -6,11 +6,11 @@
 # /dev/sda8  195,3G Ext4        /ext4Data2
 # /dev/sda9  270,9G Ntfs        /ntfs-data2
 
-MYACCOUNT="xxx_edit_Me_xxx"
+MYACCOUNT="_xxx_changeme"
 
 HOMEDIR="/home/$MYACCOUNT"
-CONFDIR="/ext4Data1/my-ubuntu/conf"
-DOCKER_DATA="/ext4Data1/docker_data"
-MYCOMPUTERDIR="/ext4Data2/MyComputer"
+CONFDIR="/lnxData1/my-ubuntu/conf"
+DOCKER_DATA="/lnxData1/docker_data"
+MYCOMPUTERDIR="/windData1/MyComputer"
 
 export DEBIAN_FRONTEND="noninteractive"

@@ -10,8 +10,22 @@
 # 
 ###########################################################
 
+# install additional fonts
+sudo apt install -y ttf-mscorefonts-installer 
+sudo apt install -y ttf-bitstream-vera ttf-dejavu ttf-xfree86-nonfree
+
 sudo apt update -y
-sudo apt install -y net-tools curl wget terminator vim vim-runtime vim-doc vim-scripts apt-transport-https   
+sudo apt install -y net-tools curl wget terminator vim vim-runtime vim-doc vim-scripts apt-
+transport-https   
+
+# install language pack
+sudo apt install -y language-pack-vi language-pack-vi-base language-pack-gnome-vi language-pack-gnome-vi-base
+
+# install Vietnamese keyboard
+sudo add-apt-repository -y ppa:teni-ime/ibus-teni
+sudo apt install -y ibus-teni
+sudo apt install -y ibus-unikey 
+
 
 # install additional browsers (Chrome)
 wget -q -O - wget https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -22,21 +36,16 @@ sudo apt install -y google-chrome-stable
 # install sublime text 3
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
 sudo apt-add-repository "deb https://download.sublimetext.com/ apt/stable/"
-sudo apt install sublime-text
+sudo apt install -y sublime-text
 
-sudo apt upgrade -y
- 
-# install additional fonts
-sudo apt install -y ttf-mscorefonts-installer ttf-bitstream-vera ttf-dejavu ttf-xfree86-nonfree
-
-# install language pack
-sudo apt install -y ibus-unikey language-pack-vi language-pack-vi-base language-pack-gnome-vi language-pack-gnome-vi-base
 
 # install extra core packages
 sudo apt install -y keepassx apt-transport-https ca-certificates software-properties-common
 sudo apt install -y ntfs-config cifs-utils system-config-samba 
 sudo apt install -y debian-keyring ubuntu-restricted-extras gparted linux-headers-generic ubuntu-restricted-extras htop
 sudo apt install -y synaptic gdebi unrar p7zip-full p7zip-rar unzip 
+
+sudo apt upgrade -y
 
 # install flash-player
 #sudo apt install -y pepperflashplugin-nonfree
