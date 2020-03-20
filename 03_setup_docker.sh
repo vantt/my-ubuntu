@@ -26,6 +26,11 @@ sudo ln -s $CONFDIR/etc/docker/daemon.json /etc/docker/daemon.json
 sudo systemctl restart docker
 
 # install Docker Compose
+# https://github.com/docker/compose/releases
 sudo rm /usr/bin/docker-compose -f
-sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
+
+# https://github.com/docker/machine/releases
+sudo curl -L https://github.com/docker/machine/releases/download/v0.16.2/docker-machine-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-machine
+sudo chmod +x /usr/local/bin/docker-machine
