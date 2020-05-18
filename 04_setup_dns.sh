@@ -21,12 +21,12 @@ cp ${CONFDIR}/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-ma
 
 sudo apt install -y net-tools
 
-MYIP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(192\.168\.[0-9]*\.[0-9]*).*/\2/p' | head -n1)
+# MYIP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(192\.168\.[0-9]*\.[0-9]*).*/\2/p' | head -n1)
 MYIP="10.254.254.254"
 echo "MyIP: $MYIP"
 
 # install dnsmasq as docker-container
-docker pull andyshinn/dnsmasq:2.78;
+docker pull andyshinn/dnsmasq:2.78
 
 docker network create --driver=bridge --subnet=172.21.0.0/16 --gateway=172.21.0.1 https-proxy
 
