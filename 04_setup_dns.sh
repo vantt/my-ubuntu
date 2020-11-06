@@ -9,9 +9,9 @@
 # 
 ###########################################################
 
-ip addr add 10.254.254.254/24 dev lo
-cp -f /etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml.bak
-cp ${CONFDIR}/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml
+sudo ip addr add 10.254.254.254/24 dev lo
+sudo cp -f /etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml.bak
+sudo cp ${CONFDIR}/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml
 
 ###########################################################
 #
@@ -41,4 +41,4 @@ docker run -d --restart=always --name=dnsmasq --network=https-proxy --cap-add=NE
       -p 127.0.0.53:53:53/tcp -p 127.0.0.53:53:53/udp \
       -p 127.0.0.1:53:53/tcp -p 127.0.0.1:53:53/udp \
       -p $MYIP:53:53/tcp -p $MYIP:53:53/udp \
-      andyshinn/dnsmasq:2.78 --address=/mio/$MYIP --server=8.8.8.8 --server=8.8.4.4
+      andyshinn/dnsmasq:2.78 --address=/mz/$MYIP --server=8.8.8.8 --server=8.8.4.4

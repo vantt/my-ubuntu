@@ -25,10 +25,13 @@ sudo mv /etc/docker/daemon.json /etc/docker/daemon.json.origin
 sudo ln -s $CONFDIR/etc/docker/daemon.json /etc/docker/daemon.json
 sudo systemctl restart docker
 
+docker context create registry --docker "host=ssh://ubuntu@192.168.3.47"
+
+
 # install Docker Compose
 # https://github.com/docker/compose/releases
 sudo rm /usr/bin/docker-compose -f
-sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+sudo curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
 # https://github.com/docker/machine/releases

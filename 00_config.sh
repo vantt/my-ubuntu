@@ -6,7 +6,7 @@
 # /dev/sda8  195,3G Ext4        /ext4Data2
 # /dev/sda9  270,9G Ntfs        /ntfs-data2
 
-MYACCOUNT="_xxx_changeme"
+MYACCOUNT="vantt"
 
 HOMEDIR="/home/$MYACCOUNT"
 CONFDIR="/lnxData1/my-ubuntu/conf"
