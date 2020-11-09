@@ -9,7 +9,7 @@ export FLUTTER_SDK='/ext4Data1/softwares/flutter-sdk'
 
 export PATH="$PATH:$DART_SDK/bin:$FLUTTER_SDK/bin:$GOPATH/bin:$GOROOT/bin:$HOME/.composer/vendor/bin:/ext4Data1/softwares/gradle/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
 
-alias bud='sudo -i'
+alias rm='gomi'
 
 alias gom1='ssh -p6879 vantt@m1'
 alias gom2='ssh -p6879 vantt@m2'
@@ -19,6 +19,7 @@ alias goapp='ssh vantt@app'
 alias gosvn='ssh vantt@svn'
 alias golamp='dker_ssh lamp root'
 alias tolamp='cd /ext4Data1/dev/lamp'
+
 #alias atdd='docker run -ti --rm  -v $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK -v $(pwd):/project ansible/ansible-tdd atdd'
 
 alias build='cd /ext4Data1/dev/lamp2/build-tool/code; phing'

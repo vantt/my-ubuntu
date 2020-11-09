@@ -18,6 +18,10 @@ sudo dpkg -i code.deb
 sudo apt install -y vim vim-runtime vim-doc vim-scripts apt-
 transport-https software-properties-common apt-transport-https build-essential tasksel filezilla  awscli
 
+# install golang gomi (rm replacement)
+wget -c https://github.com/b4b4r07/gomi/releases/download/v1.1.1/gomi_linux_x86_64.tar.gz -O - | sudo tar -xz -C /usr/local/bin/
+sudo chmod +x /usr/local/bin/gomi
+
 # install Beyond Compare 4
 wget -O bcompare.deb https://www.scootersoftware.com/bcompare-4.3.7.25118_amd64.deb
 sudo dpkg -i bcompare.deb
